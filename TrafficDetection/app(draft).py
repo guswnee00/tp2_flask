@@ -3,8 +3,9 @@
     : 모델 연결 없이 사용자가 업로드한 이미지를 웹에 보여주기
 """
 
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash
 import os
+from prediction_utils import allowed_file
 
 # 플라스크 클래스명 지정
 app = Flask(__name__)
@@ -14,12 +15,6 @@ app = Flask(__name__)
 def image_upload_retry(error):
     return render_template('error.html'), 404
 
-# 허용된 확장자 설정
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
-
-# 파일 확장자를 체크하는 함수
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # 메인 페이지
 @app.route('/', methods=['GET', 'POST'])
